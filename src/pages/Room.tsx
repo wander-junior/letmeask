@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom'
+import { notification } from '../services/notification';
 
 import logoImg from '../assets/images/logo.svg';
 
@@ -68,29 +69,36 @@ export function Room() {
     }, [roomId])
 
     async function handleSendQuestion(event: FormEvent) {
-        event.preventDefault();
-
-        if (newQuestion.trim() === '') {
-            return;
+        try {
+            event.preventDefault();
+    
+            if (newQuestion.trim() === '') {
+                notification('Aviso!', 'Campo da pergunta está vazio!', 'warning');
+                return;
+            }
+    
+            if (!user) {
+                throw new Error('Você deve estar logado para fazer a pergunta!');
+            }
+    
+            const question = {
+                content: newQuestion,
+                author: {
+                    name: user.name,
+                    avatar: user.avatar
+                },
+                isHighLighted: false,
+                isAnswered: false
+            };
+    
+            await database.ref(`rooms/${roomId}/questions`).push(question);
+    
+            setNewQuestion('');
+            notification('Sucesso!', 'Sua pergunta foi enviada com sucesso!', 'success');
+        } catch (error) {
+            notification('Erro!', error.message, 'danger');
+            console.log(error);
         }
-
-        if (!user) {
-            throw new Error('You must be logged in');
-        }
-
-        const question = {
-            content: newQuestion,
-            author: {
-                name: user.name,
-                avatar: user.avatar
-            },
-            isHighLighted: false,
-            isAnswered: false
-        };
-
-        await database.ref(`rooms/${roomId}/questions`).push(question);
-
-        setNewQuestion('');
     }
 
     return(

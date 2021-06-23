@@ -8,6 +8,7 @@ import '../styles/auth.scss';
 import { Button } from '../components/Button';
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
+import { notification } from '../services/notification';
 
 export function NewRoom() {
     const { user } = useAuth();
@@ -18,6 +19,7 @@ export function NewRoom() {
         event.preventDefault();
 
         if (newRoom.trim() === '') {
+            notification('Aviso!', 'O campo da sala está vazio!', 'warning')
             return;
         }
 

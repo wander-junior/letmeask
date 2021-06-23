@@ -6,18 +6,24 @@ import { Room } from "./pages/Room";
 
 import { AuthContextProvider } from './contexts/AuthContext'
 
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+
 function App() {
 
   return (
-    <BrowserRouter>
-      <AuthContextProvider>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/rooms/new" component={NewRoom} />
-          <Route path="/rooms/:id" component={Room} />
-        </Switch>
-      </AuthContextProvider>
-    </BrowserRouter>
+    <>
+      <ReactNotification />
+      <BrowserRouter>
+        <AuthContextProvider>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/rooms/new" component={NewRoom} />
+            <Route path="/rooms/:id" component={Room} />
+          </Switch>
+        </AuthContextProvider>
+      </BrowserRouter>
+    </>
   );
 }
 

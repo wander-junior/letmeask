@@ -1,4 +1,5 @@
 import copyImg from '../assets/images/copy.svg';
+import { notification } from '../services/notification';
 
 import '../styles/room-code.scss';
 
@@ -8,7 +9,8 @@ type RoomCodeProps = {
 
 export function RoomCode(props: RoomCodeProps) {
     function copyRoomCodeToClipboard() {
-        navigator.clipboard.writeText(props.code)
+        navigator.clipboard.writeText(props.code);
+        notification('Sucesso!', 'Código da sala copiado com sucesso', 'success');
     }
 
     return (

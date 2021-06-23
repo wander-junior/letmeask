@@ -11,6 +11,7 @@ import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
 
 import '../styles/auth.scss';
+import { notification } from '../services/notification';
 
 export function Home() {
     const history = useHistory();
@@ -29,13 +30,14 @@ export function Home() {
         event.preventDefault();
 
         if (roomCode.trim() === '') {
+            notification('Aviso!', 'Código da sala vazio!', 'warning');
             return;
         }
 
         const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
         if(!roomRef.exists()) {
-            alert('Room does not exist.')
+            notification('Erro!', 'Sala inexistente!', 'danger');
             return;
         }
 
