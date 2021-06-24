@@ -6,8 +6,10 @@ import { Room } from "./pages/Room";
 import { AdminRoom } from "./pages/AdminRoom";
 
 import { AuthContextProvider } from './contexts/AuthContext'
+import { ThemeContextProvider } from "./contexts/ThemeContext";
 
 import ReactNotification from 'react-notifications-component'
+
 import 'react-notifications-component/dist/theme.css'
 
 function App() {
@@ -16,15 +18,16 @@ function App() {
     <>
       <ReactNotification />
       <BrowserRouter>
-        <AuthContextProvider>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/rooms/new" component={NewRoom} />
-            <Route path="/rooms/:id" component={Room} />
-
-            <Route path="/admin/rooms/:id" component={AdminRoom} />
-          </Switch>
-        </AuthContextProvider>
+        <ThemeContextProvider>          
+          <AuthContextProvider>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/rooms/new" component={NewRoom} />
+              <Route path="/rooms/:id" component={Room} />
+              <Route path="/admin/rooms/:id" component={AdminRoom} />
+            </Switch>
+          </AuthContextProvider>
+        </ThemeContextProvider>
       </BrowserRouter>
     </>
   );
