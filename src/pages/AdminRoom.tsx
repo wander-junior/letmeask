@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import logoImg from '../assets/images/logo.svg';
 import deleteImg from '../assets/images/delete.svg';
+import redDeleteImg from '../assets/images/delete-red.svg';
 
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
@@ -26,6 +27,7 @@ export function AdminRoom() {
     const params = useParams<RoomParams>();
     const roomId = params.id;
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isEndModalOpen, setIsEndModalOpen] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState('');
 
     const { title, questions } = useRoom(roomId)
@@ -43,7 +45,7 @@ export function AdminRoom() {
         setIsDeleteModalOpen(false);
     }
 
-    function openModal(questionId: string) {
+    function openDeleteModal(questionId: string) {
         setIsDeleteModalOpen(true);
         setCurrentQuestion(questionId);
     }
@@ -55,7 +57,7 @@ export function AdminRoom() {
                     <img src={logoImg} alt="Letmeask" />
                     <div>
                         <RoomCode code={params.id} />
-                        <Button IsOutlined onClick={handleEndRoom}>Encerrar sala</Button>
+                        <Button IsOutlined onClick={() => setIsEndModalOpen(true)}>Encerrar sala</Button>
                     </div>
                 </div>
             </header>
@@ -75,7 +77,7 @@ export function AdminRoom() {
                             >
                                 <button
                                     type="button"
-                                    onClick={() => openModal(question.id)}
+                                    onClick={() => openDeleteModal(question.id)}
                                 >
                                     <img src={deleteImg} alt="Remover pergunta" />
                                 </button>    
@@ -90,12 +92,26 @@ export function AdminRoom() {
                 className="modal"
                 overlayClassName="modal-overlay"
             >
-                <img src={deleteImg} alt="Remover pergunta" />
+                <img src={redDeleteImg} alt="Remover pergunta" />
                 <h1>Excluir pergunta</h1>
                 <p>Tem certeza que você deseja excluir a pergunta?</p>
                 <div>
                     <button onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
                     <button onClick={() => handleDeleteQuestion(currentQuestion)}>Sim, excluir</button>
+                </div>
+            </Modal>
+            <Modal
+                isOpen={isEndModalOpen}
+                onRequestClose={() => setIsEndModalOpen(false)}
+                className="modal"
+                overlayClassName="modal-overlay"
+            >
+                <img src={redDeleteImg} alt="Remover pergunta" />
+                <h1>Encerrar a sala</h1>
+                <p>Tem certeza que você deseja encerrar esta sala?</p>
+                <div>
+                    <button onClick={() => setIsEndModalOpen(false)}>Cancelar</button>
+                    <button onClick={() => handleEndRoom()}>Sim, encerrar</button>
                 </div>
             </Modal>
         </div>
