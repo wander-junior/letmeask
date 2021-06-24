@@ -14,6 +14,7 @@ import { database } from '../services/firebase';
 import Modal from 'react-modal';
 
 import '../styles/room.scss';
+import '../styles/modal.scss';
 
 type RoomParams = {
     id: string;
@@ -83,18 +84,18 @@ export function AdminRoom() {
                     })}
                 </div>
             </main>
-            <Modal 
+            <Modal
                 isOpen={isDeleteModalOpen}
                 onRequestClose={() => setIsDeleteModalOpen(false)}
+                className="modal"
+                overlayClassName="modal-overlay"
             >
+                <img src={deleteImg} alt="Remover pergunta" />
+                <h1>Excluir pergunta</h1>
+                <p>Tem certeza que você deseja excluir a pergunta?</p>
                 <div>
-                    <img src={deleteImg} alt="Remover pergunta" />
-                    <h1>Excluir pergunta</h1>
-                    <p>Tem certeza que você deseja excluir a pergunta?</p>
-                    <div>
-                        <button onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
-                        <button onClick={() => handleDeleteQuestion(currentQuestion)}>Sim, excluir</button>
-                    </div>
+                    <button onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
+                    <button onClick={() => handleDeleteQuestion(currentQuestion)}>Sim, excluir</button>
                 </div>
             </Modal>
         </div>
