@@ -7,11 +7,16 @@
             max-width: 1120px;
             margin: 0 auto;
             display: flex;
+            gap: 16px;
             justify-content: space-between;
             align-items: center;
 
             > img {
                 max-height: 45px;
+            }
+
+            @media (max-width: 425px) {
+                flex-direction: column;
             }
         }
     }
@@ -19,6 +24,7 @@
     main {
         max-width: 800px;
         margin: 0 auto;
+        padding: 0 32px;
 
         .room-title {
             margin: 32px 0 24px;
@@ -38,6 +44,10 @@
                 padding: 8px 16px;
                 color: #fff;
                 font-size: 14px;
+
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;              
             }
         }
 
@@ -58,6 +68,7 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-top: 16px;
+                width: 100%;
 
                 .user-info {
                     display: flex;
