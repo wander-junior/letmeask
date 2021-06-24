@@ -3,13 +3,16 @@ import { useHistory } from 'react-router-dom';
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
+import darkLogoImg from '../assets/images/dark-logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 import facebookIconImg from '../assets/images/facebook.svg';
 
 import { database } from '../services/firebase';
 
 import { Button } from '../components/Button';
+import { ThemeToggle } from '../components/ThemeToggle';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from "../hooks/useTheme";
 
 import '../styles/auth.scss';
 import { notification } from '../services/notification';
@@ -17,6 +20,7 @@ import { notification } from '../services/notification';
 export function Home() {
     const history = useHistory();
     const { user, signInWithSocialMedia } = useAuth();
+    const { theme } = useTheme()
     const [roomCode, setRoomCode] = useState('');
 
     async function handleCreateRoom(socialMedia: 'google.com' | 'facebook.com') {
@@ -57,9 +61,12 @@ export function Home() {
                 <strong>Crie salas de Q&amp;A ao-vivo</strong>
                 <p>Tire as dúvidas da sua audiência em tempo-real</p>
             </aside>
-            <main>
+            <main className={`${theme === 'dark' && 'dark'}`}>
                 <div className="main-content">
-                    <img src={logoImg} alt="letmeask" />
+                    {theme === 'light' ? 
+                        <img src={logoImg} alt="letmeask" /> :
+                        <img src={darkLogoImg} alt="letmeask" />
+                    }
                     <button onClick={() => handleCreateRoom('google.com')} className="create-room">
                         <img src={googleIconImg} alt="Logo do google" />
                         Crie sua sala com o Google
@@ -80,6 +87,9 @@ export function Home() {
                             Entrar na sala
                         </Button>
                     </form>
+                    <div className="theme-container">
+                        <ThemeToggle />
+                    </div>
                 </div>
             </main>
         </div>
