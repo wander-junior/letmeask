@@ -1,46 +1,57 @@
-# Getting Started with Create React App
+<p align="center">
+  <img src=./src/assets/images/dark-logo.svg/>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sobre o projeto
 
-## Available Scripts
+Letmeask é um projeto desenvolvido durante NLW - Next Level Week #6 da RocketSeat. Se trata de uma plataforma para criar salas de perguntas e respostas para ser usada em lives.
 
-In the project directory, you can run:
+# Tecnologias usadas :computer:
 
-### `yarn start`
+- React
+- TypeScript
+- SASS
+- Firebase
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Como executar o projeto :rocket:
+```bash
+  # Clone esse respositório
+  $ git clone https://github.com/wander-junior/letmeask.git
+  $ cd letmeask
+  
+  # Instale as dependências
+  $ yarn
+  
+  # Execute a aplicação
+  $ yarn start
+  
+  # A aplicação estará disponível através do seu browser no localhost:3000
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# Milha extra :new_moon:
 
-### `yarn test`
+Um desafio proposto pela RocketSeat é de implementar novas funcionalidades à aplicação, para praticar os conceitos estudados durante a semana. As novas funcionalidades desenvolvidas foram:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- ## Responsividade
 
-### `yarn build`
+Todas as telas da aplicação estão responsivas para desktop, tablet e smartphones.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ## Dark theme 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Foi adicionada a funcionalidade de troca de temas (claro e escuro). Além disso, o tema escolhido pelo o usuário fica salvo no navegador, usando o localStorage.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- ## Autenticação por Facebook
 
-### `yarn eject`
+Foi adicionada a possibilidade de criar uma nova sala usando o facebook, com autenticação feita pelo Firebase.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- ## Notificações (toast)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Foi adicionado um sistema de notificações, usando o pacote react-notifications, para notificar o usuário de sucessos, avisos e erros.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- ## Modais
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Foram adicionados modais para remover perguntas e para encerrar sala.
 
-## Learn More
+<br/><br/><br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<p align="center">Feito por Wander Júnior Cruz</p>
