@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 // import { notification } from '../services/notification';
 
 import logoImg from '../assets/images/logo.svg';
+import darkLogoImg from '../assets/images/dark-logo.svg';
 import deleteImg from '../assets/images/delete.svg';
 import redDeleteImg from '../assets/images/delete-red.svg';
 import checkImg from '../assets/images/check.svg';
@@ -15,6 +16,8 @@ import { Question } from '../components/Question';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
 import Modal from 'react-modal';
+import { ThemeToggle } from '../components/ThemeToggle';
+import { useTheme } from "../hooks/useTheme";
 
 import '../styles/room.scss';
 import '../styles/modal.scss';
@@ -31,6 +34,7 @@ export function AdminRoom() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEndModalOpen, setIsEndModalOpen] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState('');
+    const { theme } = useTheme();
 
     const { title, questions } = useRoom(roomId)
 
@@ -66,10 +70,10 @@ export function AdminRoom() {
     }
     
     return(
-        <div id="page-room">
+        <div id="page-room" className={`${theme === 'dark' && 'dark'}`}>
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Letmeask" />
+                    <img src={theme === 'dark' ? darkLogoImg : logoImg} alt="Letmeask" />
                     <div>
                         <RoomCode code={params.id} />
                         <Button IsOutlined onClick={() => setIsEndModalOpen(true)}>Encerrar sala</Button>
@@ -147,6 +151,9 @@ export function AdminRoom() {
                     <button onClick={() => handleEndRoom()}>Sim, encerrar</button>
                 </div>
             </Modal>
+            <div className="toggle-container">
+                <ThemeToggle />
+            </div>
         </div>
     )
 }

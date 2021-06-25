@@ -1,10 +1,13 @@
 #page-room {
     position: relative;
     padding-bottom: 64px;
+    min-height: 100vh;
 
     &.dark {
         background: #333;
-        min-height: 100vh;
+        header {
+            border-bottom: 1px solid #999;
+        }
 
         main {
             .room-title {
