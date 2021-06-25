@@ -3,15 +3,19 @@ import { Link, useHistory } from 'react-router-dom';
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
+import darkLogoImg from '../assets/images/dark-logo.svg';
 
 import '../styles/auth.scss';
 import { Button } from '../components/Button';
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
 import { notification } from '../services/notification';
+import { ThemeToggle } from '../components/ThemeToggle';
+import { useTheme } from '../hooks/useTheme';
 
 export function NewRoom() {
     const { user } = useAuth();
+    const { theme } = useTheme();
     const history = useHistory()
     const [newRoom, setNewRoom] = useState('');
 
@@ -40,9 +44,9 @@ export function NewRoom() {
                 <strong>Crie salas de Q&amp;A ao-vivo</strong>
                 <p>Tire as dúvidas da sua audiência em tempo-real</p>
             </aside>
-            <main>
+            <main className={`${theme === 'dark' ? 'dark' : ''}`}>
                 <div className="main-content">
-                    <img src={logoImg} alt="letmeask" />
+                    <img src={theme === 'dark' ? darkLogoImg : logoImg} alt="Letmeask" />
                     <h2>Criar uma nova sala</h2>
                     <form onSubmit={handleCreateRoom}>
                         <input 
@@ -58,6 +62,9 @@ export function NewRoom() {
                     <p>
                         Quer entrar em uma sala existente? <Link to="/">clique aqui</Link>
                     </p>
+                    <div className="theme-container">
+                        <ThemeToggle />
+                    </div>
                 </div>
             </main>
         </div>

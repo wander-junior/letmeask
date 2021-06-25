@@ -47,6 +47,16 @@
 
         &.dark {
             background: #333;
+
+            .main-content {
+                h2 {
+                    color: #f8f8f8;
+                }
+
+                p {
+                    color: #f8f8f8;
+                }
+            }
         }
 
         @media (max-width: 820px) {
