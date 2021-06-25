@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { notification } from '../services/notification';
 
 import logoImg from '../assets/images/logo.svg';
+import darkLogoImg from '../assets/images/dark-logo.svg';
 
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
@@ -10,6 +11,8 @@ import { Question } from '../components/Question';
 import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
+import { ThemeToggle } from '../components/ThemeToggle';
+import { useTheme } from "../hooks/useTheme";
 
 import '../styles/room.scss';
 
@@ -19,11 +22,12 @@ type RoomParams = {
 
 export function Room() {
     const { user } = useAuth();
+    const { theme } = useTheme();
     const params = useParams<RoomParams>();
     const [newQuestion, setNewQuestion] = useState('');
     const roomId = params.id;
 
-    const { title, questions } = useRoom(roomId)
+    const { title, questions } = useRoom(roomId);
     
     async function handleSendQuestion(event: FormEvent) {
         try {
@@ -69,10 +73,10 @@ export function Room() {
     }
 
     return(
-        <div id="page-room">
+        <div id={"page-room"} className={`${theme === 'dark' && 'dark'}`}>
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Letmeask" />
+                    <img src={theme === 'dark' ? darkLogoImg : logoImg} alt="Letmeask" />
                     <RoomCode code={params.id} />
                 </div>
             </header>
@@ -131,6 +135,9 @@ export function Room() {
                     })}
                 </div>
             </main>
+            <div className="toggle-container">
+                <ThemeToggle />
+            </div>
         </div>
     )
 }
