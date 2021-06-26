@@ -29,18 +29,28 @@ type QuestionType = {
     likeId: string | undefined;
 }
 
+function compare( a: QuestionType, b: QuestionType ) {
+    if ( a.likeCount > b.likeCount ){
+      return -1;
+    }
+    if ( a.likeCount < b.likeCount ){
+      return 1;
+    }
+    return 0;
+  }
+  
 export function useRoom(roomId: string) {
     const { user } = useAuth();
     const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [title, setTitle] = useState('');
-
+    
     useEffect(() => {
         const roomRef = database.ref(`rooms/${roomId}`);
-
+        
         roomRef.on('value', room => {
             const databaseRoom = room.val();
             const firebaseQuestions: FirebaseQuestions = databaseRoom.questions  ?? {};
-
+            
             const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
                 return {
                     id: key,
@@ -52,6 +62,8 @@ export function useRoom(roomId: string) {
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
                 }
             })
+
+            parsedQuestions.sort(compare);
 
             setTitle(databaseRoom.title);
             setQuestions(parsedQuestions);

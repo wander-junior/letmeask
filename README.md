@@ -52,6 +52,10 @@ Foi adicionado um sistema de notificações, usando o pacote react-notifications
 
 Foram adicionados modais para remover perguntas e para encerrar sala.
 
+- ## Ordenação de perguntas
+
+As perguntas são ordenadas por número de curtidas, ajudando a destacar as perguntas mais relevantes.
+
 <br/><br/><br/>
 
 <p align="center">Feito por Wander Júnior Cruz</p>
