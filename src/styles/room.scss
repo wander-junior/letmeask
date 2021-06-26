@@ -148,6 +148,9 @@
 
         .question-list {
             margin-top: 32px;
+            div + div {
+                margin-top: 8px;
+            }
         }
     }
 

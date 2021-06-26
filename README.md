@@ -54,7 +54,7 @@ Foram adicionados modais para remover perguntas e para encerrar sala.
 
 - ## Ordenação de perguntas
 
-As perguntas são ordenadas por número de curtidas, ajudando a destacar as perguntas mais relevantes.
+As perguntas são ordenadas por número de curtidas, ajudando a destacar as perguntas mais relevantes. Para a animação de quando uma pergunta troca de posição, foi usado o pacote react-flip-move.
 
 <br/><br/><br/>
 

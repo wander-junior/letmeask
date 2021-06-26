@@ -21,6 +21,7 @@ import { useTheme } from "../hooks/useTheme";
 
 import '../styles/room.scss';
 import '../styles/modal.scss';
+import FlipMove from 'react-flip-move';
 
 type RoomParams = {
     id: string;
@@ -87,40 +88,43 @@ export function AdminRoom() {
                     { questions.length > 0 && <span>{questions.length} pergunta{questions.length > 0 && 's'}</span>}
                 </div>
                 <div className="question-list">
-                    {questions.map(question => {
-                        return (
-                            <Question
-                                key={question.id}
-                                content={question.content}
-                                author={question.author}
-                                isAnswered={question.isAnswered}
-                                isHighlighted={question.isHighlighted}
-                            >
-                                {!question.isAnswered && (
-                                <>
-                                    <button
-                                        type="button"
-                                        onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                    <FlipMove>
+                        {questions.map(question => {
+                            return (
+                                <div key={question.id}>
+                                    <Question
+                                        content={question.content}
+                                        author={question.author}
+                                        isAnswered={question.isAnswered}
+                                        isHighlighted={question.isHighlighted}
                                     >
-                                        <img src={checkImg} alt="Marcar pergunta como respondida" />
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => handleHighlightQuestion(question.id)}
-                                    >
-                                        <img src={answerImg} alt="Dar destaque à pergunta" />
-                                    </button>
-                                </>
-                                )}
-                                <button
-                                    type="button"
-                                    onClick={() => openDeleteModal(question.id)}
-                                >
-                                    <img src={deleteImg} alt="Remover pergunta" />
-                                </button>
-                            </Question>
-                        );
-                    })}
+                                        {!question.isAnswered && (
+                                        <>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                                            >
+                                                <img src={checkImg} alt="Marcar pergunta como respondida" />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleHighlightQuestion(question.id)}
+                                            >
+                                                <img src={answerImg} alt="Dar destaque à pergunta" />
+                                            </button>
+                                        </>
+                                        )}
+                                        <button
+                                            type="button"
+                                            onClick={() => openDeleteModal(question.id)}
+                                        >
+                                            <img src={deleteImg} alt="Remover pergunta" />
+                                        </button>
+                                    </Question>
+                                </div>
+                            );
+                        })}
+                    </FlipMove>
                 </div>
             </main>
             <Modal
