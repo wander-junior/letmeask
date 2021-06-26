@@ -1,8 +1,10 @@
 import { useEffect, useState, createContext, ReactNode } from "react";
+import { Loading } from "../components/Loading";
 import { auth, firebase } from "../services/firebase";
 
+
 type User = {
-    id: string;
+    id: string | null;
     name: string;
     avatar: string;
     socialMedia?: string;
@@ -20,13 +22,14 @@ type AuthContextProviderProps = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
-    const [user, setUser] = useState<User>()
+    const [user, setUser] = useState<User>();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged(user => {
         if (user) {
           const { displayName, photoURL, uid } = user;
-  
+          
           if (!displayName || !photoURL) {
             throw new Error('Missing information from Google Account.');
           }
@@ -37,9 +40,19 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
             avatar: photoURL,
             socialMedia: user.providerData[0]?.providerId
           })  
+          setIsLoading(false);
+        }
+        else {
+          setIsLoading(false)
+          setUser({
+            id: null,
+            name: '',
+            avatar: ''
+          })
         }
       })
-  
+      
+
       return () => {
         unsubscribe();
       }
@@ -67,6 +80,10 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
         })
       }
     }
+
+    if (isLoading) return (
+      <Loading />
+    )
 
     return (
         <AuthContext.Provider value={{user, signInWithSocialMedia }}>

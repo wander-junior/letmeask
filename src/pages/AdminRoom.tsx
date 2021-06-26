@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
 // import { notification } from '../services/notification';
 
@@ -12,7 +12,7 @@ import answerImg from '../assets/images/answer.svg';
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
-// import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
 import Modal from 'react-modal';
@@ -22,13 +22,14 @@ import { useTheme } from "../hooks/useTheme";
 import '../styles/room.scss';
 import '../styles/modal.scss';
 import FlipMove from 'react-flip-move';
+import { notification } from '../services/notification';
 
 type RoomParams = {
     id: string;
 }
 
 export function AdminRoom() {
-    // const { user } = useAuth();
+    const { user } = useAuth();
     const history = useHistory();
     const params = useParams<RoomParams>();
     const roomId = params.id;
@@ -37,7 +38,16 @@ export function AdminRoom() {
     const [currentQuestion, setCurrentQuestion] = useState('');
     const { theme } = useTheme();
 
-    const { title, questions } = useRoom(roomId)
+    const { title, questions, adminId } = useRoom(roomId)
+
+    useEffect(() => {
+        console.log(user?.id)
+        console.log(adminId)
+        if (user?.id === null || (adminId !== '' && adminId !== user?.id)) {
+            notification("Erro", "Você precisa ser o administrador para acessar essa página", "danger")
+            history.push('/')
+        }
+    }, [user, history, adminId])
 
     async function handleEndRoom() {
         await database.ref(`rooms/${roomId}`).update({
@@ -46,7 +56,6 @@ export function AdminRoom() {
 
         history.push('/');
     }
-
     
     async function handleDeleteQuestion(questionId: string) {
         await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
