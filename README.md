@@ -56,6 +56,10 @@ Foram adicionados modais para remover perguntas e para encerrar sala.
 
 As perguntas são ordenadas por número de curtidas, ajudando a destacar as perguntas mais relevantes. Para a animação de quando uma pergunta troca de posição, foi usado o pacote react-flip-move.
 
+- ## Rota privada
+
+A página de administração de uma sala só pode ser acessada pelo administrador dessa sala.
+
 <br/><br/><br/>
 
 <p align="center">Feito por Wander Júnior Cruz</p>
